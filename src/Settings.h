@@ -1,6 +1,8 @@
 #ifndef __HAL__SETTINGS_H__
 #define __HAL__SETTINGS_H__
 
+#include <Arduino.h>
+
 #include <string>
 
 /*
@@ -23,5 +25,7 @@ class Settings {
   char ssid_[kSsidLength + 1];
   char password_[kPasswordLength + 1];
 };
+
+void print(Print& stream, const Settings& settings);
 
 #endif  // __HAL__SETTINGS_H__

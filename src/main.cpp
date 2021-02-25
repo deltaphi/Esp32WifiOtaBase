@@ -7,6 +7,8 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 
+#include <TelnetStream.h>
+
 #include "Settings.h"
 #include "wifiManager.h"
 
@@ -25,7 +27,7 @@ void setup() {
 
   Settings settings;
   settings.load();
-  settings.print();
+  print(Serial, settings);
 
   setupWifi();
   startWifi(settings.getSsid(), settings.getPassword());
@@ -35,6 +37,8 @@ void setup() {
     delay(5000);
     ESP.restart();
   }
+
+  Serial.println("WiFi connected, continuing Setup!");
 
   ArduinoOTA
       .onStart([]() {
@@ -67,6 +71,10 @@ void setup() {
       });
 
   ArduinoOTA.begin();
+
+  TelnetStream.begin(23);
+  TelnetStream.println("Hello from Wifi OTA Base!");
+  Serial.println("Ready!");
 }
 
 void loop() {
@@ -77,4 +85,5 @@ void loop() {
   }
 
   ArduinoOTA.handle();
+  TelnetStream.println("loop ");
 }

@@ -29,10 +29,10 @@ void Settings::load() {
   replaceNewline(password_, kPasswordLength);
 }
 
-void Settings::print() {
-  Serial.print("SSID: '");
-  Serial.print(ssid_);
-  Serial.print("' Password: '");
-  Serial.print(password_);
-  Serial.println("'");
+void print(Print& stream, const Settings& settings) {
+  stream.print("SSID: '");
+  stream.print(settings.getSsid());
+  stream.print("' Password: '");
+  stream.print(settings.getPassword());
+  stream.println("'");
 }
