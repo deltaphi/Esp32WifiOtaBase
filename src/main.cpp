@@ -1,7 +1,25 @@
 #include <Arduino.h>
 
+#include <SPIFFS.h>
+
+#include "Settings.h"
+#include "wifiManager.h"
+
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(115200);
+
+  Serial.println("Wifi OTA Base starting.");
+
+  if (!SPIFFS.begin()) {
+    Serial.println("Error: Could not mount SPIFFS.");
+  }
+
+  Settings settings;
+  settings.load();
+  settings.print();
+
+  setupWifi();
+  startWifi(settings.getSsid(), settings.getPassword());
 }
 
 void loop() {
